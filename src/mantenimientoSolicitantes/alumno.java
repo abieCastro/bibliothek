@@ -16,7 +16,7 @@ public class alumno {
     String nombreA;
     String apellidoPatA;
     String apellidoMatA;
-    int gradoA;
+    String gradoA;
     String grupoA;
     String telefonoA; 
     String celularA;
@@ -29,7 +29,7 @@ public class alumno {
         
     }
     
-    public alumno(int claveAlumno, String noControlA, String nombreA, String apellidoPatA, String apellidoMatA, int gradoA, String grupoA, String telefonoA, String celularA,int limiteLibroA,int limiteMatVisA, int librosSolicA, int matVisSolicA) {
+    public alumno(int claveAlumno, String noControlA, String nombreA, String apellidoPatA, String apellidoMatA, String gradoA, String grupoA, String telefonoA, String celularA,int limiteLibroA,int limiteMatVisA, int librosSolicA, int matVisSolicA) {
         this.claveAlumno=claveAlumno;
         this.noControlA=noControlA;
         this.nombreA=nombreA;
@@ -65,7 +65,7 @@ public class alumno {
         return apellidoMatA;
     }
     
-    public int getGradoA() {
+    public String getGradoA() {
         return gradoA;
     }
     
@@ -117,7 +117,7 @@ public class alumno {
         this.apellidoMatA=apellidoMatA;
     }
     
-    public void setGradoA(int gradoA) {
+    public void setGradoA(String gradoA) {
         this.gradoA=gradoA;
     }
     

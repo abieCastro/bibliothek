@@ -105,7 +105,7 @@ public class controlPrestamo {
                     alum.setNombreA(rs.getString(3));
                     alum.setApellidoPatA(rs.getString(4));
                     alum.setApellidoMatA(rs.getString(5));
-                    alum.setGradoA(rs.getInt(6));
+                    alum.setGradoA(rs.getString(6));
                     alum.setGrupoA(rs.getString(7));              
                     alum.setLimiteLibroA(rs.getInt(10));
                     alum.setLimiteMatVisA(rs.getInt(11));
@@ -366,7 +366,7 @@ public class controlPrestamo {
                     ejempLib.setIdEjemplarL(rs.getString(2));
                     lib.setTituloL(rs.getString(3));
                     lib.setAutorL(rs.getString(4));
-                    lib.setAñoL(rs.getInt(5));
+                    lib.setAñoL(rs.getString(5));
                     lib.setEditorialL(rs.getString(6));
                     lib.setClasificacionL(rs.getString(7));
                     lib.setExistenciaL(rs.getInt(8));

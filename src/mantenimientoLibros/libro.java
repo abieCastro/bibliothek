@@ -14,7 +14,7 @@ public class libro {
     String claveLibro;
     String tituloL;
     String autorL;
-    int añoL;
+    String añoL;
     String editorialL;
     String clasificacionL;
     int existenciaL;
@@ -24,7 +24,7 @@ public class libro {
         
     }
 
-    public libro(String claveLibro, String tituloL, String autorL, int añoL, String editorialL, String clasificacionL, int existenciaL, int disponibilidadL) {
+    public libro(String claveLibro, String tituloL, String autorL, String añoL, String editorialL, String clasificacionL, int existenciaL, int disponibilidadL) {
         this.claveLibro = claveLibro;
         this.tituloL = tituloL;
         this.autorL = autorL;
@@ -59,11 +59,11 @@ public class libro {
         this.autorL = autorL;
     }
 
-    public int getAñoL() {
+    public String getAñoL() {
         return añoL;
     }
 
-    public void setAñoL(int anioL) {
+    public void setAñoL(String anioL) {
         this.añoL = anioL;
     }
 

@@ -67,18 +67,18 @@ public class menuPrinc extends JFrame{
     public void inicializar() throws ParseException{
         tbarMenuPrinc = new JToolBar();
         btMenuCatalogos = new JButton("Catálogos");
-//        btCatalogos.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                btCatalogosActionPerformed(evt);
-//            }
-//        });
+        btMenuCatalogos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenuCatalogosActionPerformed(evt);
+            }
+        });
 //        
         btMenuSolic = new JButton("Solicitantes");
-//        btSolicitantes.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                btSolicitantesActionPerformed(evt);
-//            }
-//        });
+        btMenuSolic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenuSolicActionPerformed(evt);
+            }
+        });
         
         btMenuPres = new JButton("Préstamos");           
         btMenuPres.addActionListener(new java.awt.event.ActionListener() {
@@ -110,16 +110,16 @@ public class menuPrinc extends JFrame{
         tbarMenuPrinc.setFloatable(false);
         this.getContentPane().add(tbarMenuPrinc);
         this.setResizable(false);
-                
-//       jpPrincCatalogos=lib.interfazLibro();
-//       add(jpPrincCatalogos);
-//       jpPrincCatalogos.setVisible(false);
-        
-//
-//       JPSolicitantes = new JPanel();
-//       JPSolicitantes=S.Alumnos();
-//       add(JPSolicitantes);
-//       JPSolicitantes.setVisible(false);
+               
+   
+        jpMenuCatalogos=menuLib.InterfazLibro();
+        add(jpMenuCatalogos);
+        jpMenuCatalogos.setVisible(false);
+
+       jpMenuSolic = new JPanel();
+       jpMenuSolic=menuSolic.Solicitantes();
+       add(jpMenuSolic);
+       jpMenuSolic.setVisible(false);
        
        jpMenuPres = new JPanel();       
        jpMenuPres = menuPres.jpPrincPrest();
@@ -155,32 +155,43 @@ public class menuPrinc extends JFrame{
     }
     
     /*Evento Catalogos*/
-//    public void btCatalogosActionPerformed(ActionEvent evt){       
-//        labSubTitulo.setVisible(false);
-//        labTitulo.setVisible(false);
-//        jpCatalogos.setVisible(true);
-//    
+    public void btMenuCatalogosActionPerformed(ActionEvent evt){       
+        labSubTitulo.setVisible(false);
+        labTitulo.setVisible(false);
+        jpMenuCatalogos.setVisible(true);
+    
 //        jpSolicitantes.setVisible(false);
-//        jpPrestamos.setVisible(false);
-//    }
+        jpMenuPres.setVisible(false);
+        jpMenuDev.setVisible(false);
+        jpMenuHistorial.setVisible(false);
+        
+        jpMenuSolic.setVisible(false);
+    }
     
     /*Evento Solicitantes*/
-//    public void btSolicitantesActionPerformed(ActionEvent evt){
-//        labSubTitulo.setVisible(false);
-//        labTitulo.setVisible(false);
-//        jpCatalogos.setVisible(false);
-//        
-//        jpSolicitantes.setVisible(true);
-//        jpPrestamos.setVisible(false);
-//    }
+    public void btMenuSolicActionPerformed(ActionEvent evt){
+        labSubTitulo.setVisible(false);
+        labTitulo.setVisible(false);
+        jpMenuCatalogos.setVisible(false);
+        
+        jpMenuSolic.setVisible(true);
+        jpMenuPres.setVisible(false);
+        jpMenuDev.setVisible(false);
+        jpMenuHistorial.setVisible(false);
+        jpMenuCatalogos.setVisible(false);
+    }
     
     /*Evento Prestamos*/
     public void btPrestamosActionPerformed(ActionEvent evt){     
         labSubTitulo.setVisible(false);
-        labTitulo.setVisible(false);        
+        labTitulo.setVisible(false); 
+        
         jpMenuPres.setVisible(true);
         jpMenuDev.setVisible(false);
         jpMenuHistorial.setVisible(false);
+        
+        jpMenuCatalogos.setVisible(false);
+        jpMenuSolic.setVisible(false);
         //btMenuPres.setBackground(Color.BLUE);
         //btMenuPres.setForeground(Color.red);
     }
@@ -192,6 +203,9 @@ public class menuPrinc extends JFrame{
         jpMenuPres.setVisible(false);
         jpMenuDev.setVisible(true);
         jpMenuHistorial.setVisible(false);
+        
+        jpMenuCatalogos.setVisible(false);
+        jpMenuSolic.setVisible(false);
     }
     
     /*Evento Historial*/
@@ -201,6 +215,9 @@ public class menuPrinc extends JFrame{
         jpMenuPres.setVisible(false);
         jpMenuDev.setVisible(false);
         jpMenuHistorial.setVisible(true);
+        
+        jpMenuCatalogos.setVisible(false);
+        jpMenuSolic.setVisible(false);
     }   
         
 }

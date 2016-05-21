@@ -18,12 +18,12 @@ public class conexion {
     Connection conect=null;
     public Connection getConexion() {
         try {
-            System.out.println("Estoy intentando conectarme a la base de datos");
+           
             Class.forName("com.mysql.jdbc.Driver");
-            conect =DriverManager.getConnection("jdbc:mysql://localhost:3306/bibliothek","root", "root");
-            System.out.println("Conexion exitosa");
+            conect =DriverManager.getConnection("jdbc:mysql://localhost/bibliothek","root","vaqueton");
+            
         }catch(SQLException e) {
-            System.out.println("Error de MySQL");           
+                       
         }catch(ClassNotFoundException e) {
             e.printStackTrace();
         }catch(Exception e) {

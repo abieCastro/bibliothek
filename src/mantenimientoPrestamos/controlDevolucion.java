@@ -95,7 +95,7 @@ public class controlDevolucion {
                     ejempLib.setIdEjemplarL(rs.getString(2));
                     lib.setTituloL(rs.getString(3));
                     lib.setAutorL(rs.getString(4));
-                    lib.setAñoL(rs.getInt(5));
+                    lib.setAñoL(rs.getString(5));
                     lib.setEditorialL(rs.getString(6));
                     lib.setClasificacionL(rs.getString(7));
                     lib.setExistenciaL(rs.getInt(8));
