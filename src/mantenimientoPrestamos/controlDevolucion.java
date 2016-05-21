@@ -501,10 +501,10 @@ public class controlDevolucion {
             }catch(SQLException e){
             }            
         }
-        if(selectMatVis==1 && selectAlumno==1){
+        if(selectMatVis==1 && selectAlumno==1){           
             try{ 
                 Connection acceDB = con.getConexion();
-                PreparedStatement ps = acceDB.prepareStatement("UPDATE alumno SET limiteMatVisA=limiteLibroA+1 where claveAlumno="+listaPres.get(0).getAlumno_claveAlumno()+"';");                
+                PreparedStatement ps = acceDB.prepareStatement("UPDATE alumno SET limiteMatVisA=limiteMatVisA+1 where claveAlumno='"+listaPres.get(0).getAlumno_claveAlumno()+"';");                
                 int validar=ps.executeUpdate();                
                 if(validar>0){
                     registro=true;
@@ -518,7 +518,7 @@ public class controlDevolucion {
         if(selectLibro==1 && selectDocente==1){
             try{ 
                 Connection acceDB = con.getConexion();
-                PreparedStatement ps = acceDB.prepareStatement("UPDATE docente SET limiteLibroD=limiteLibroD+1 where claveDocente="+listaPres.get(0).getDocente_claveDocente()+";");                
+                PreparedStatement ps = acceDB.prepareStatement("UPDATE docente SET limiteLibroD=limiteLibroD+1 where claveDocente='"+listaPres.get(0).getDocente_claveDocente()+"';");                
                     int validar=ps.executeUpdate();
                     if(validar>0){
                         registro=true;
@@ -532,7 +532,7 @@ public class controlDevolucion {
             if(selectMatVis==1 && selectDocente==1){
                 try{ 
                     Connection acceDB = con.getConexion();
-                    PreparedStatement ps = acceDB.prepareStatement("UPDATE docente SET limiteMatVisD=limiteLibroD+1 where claveDocente="+listaPres.get(0).getDocente_claveDocente()+";");                
+                    PreparedStatement ps = acceDB.prepareStatement("UPDATE docente SET limiteMatVisD=limiteMatVisD+1 where claveDocente='"+listaPres.get(0).getDocente_claveDocente()+"';");                
                     int validar=ps.executeUpdate();                
                     if(validar>0){
                         registro=true;
