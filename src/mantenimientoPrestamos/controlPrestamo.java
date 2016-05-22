@@ -584,75 +584,15 @@ public class controlPrestamo {
     }       
      
     public boolean validarCumTodLim() {
-        boolean validar=false;
+        boolean validar=true;
         if(vistaPres.labResLimLibro.getText().equalsIgnoreCase("0") && vistaPres.labResLimMatVis.getText().equalsIgnoreCase("0")) {
             validar=false;
         } else {
             validar=true;
         }        
+        System.out.println(validar+"VALIDAR");
         return validar;
     }
-//    public boolean validarLimPres(JTable tbDetalle) throws ParseException {  
-//        boolean validar=false;
-//        String valores=calcularRegPres();
-//        String agregar="";
-//        
-//        if (selectLibro == 1) {      
-//            String[] prestamos=valores.split("--");
-//            for(int x=0; x<prestamos.length; x++) {
-//                if(prestamos[x].startsWith("LI")){
-//                    contPresLib=contPresLib+1;                    
-//                }                        
-//            }     
-//          
-//            
-//            if(Integer.parseInt(vistaPres.labResLimLibro.getText())<=contPresLib) {
-//                JOptionPane.showMessageDialog(null, "Ya cumple con el límite de préstamos de libros");                 
-//            } else {                
-//                if(valores!="") {
-//                    String todoL=listaLibro.get(0).getClaveLibro()+"/"+listaEjempLibro.get(0).getIdEjemplarL()+"/"+listaLibro.get(0).getTituloL();
-//                    agregar=valores+todoL;
-//                    llenarDetallePres(agregar, tbDetalle); 
-//                    contPresLib=contPresLib+1;
-//                } else {    
-//                    
-//                    agregar=listaLibro.get(0).getClaveLibro()+"/"+listaEjempLibro.get(0).getIdEjemplarL()+"/"+listaLibro.get(0).getTituloL();                    
-//                    llenarDetallePres(agregar,tbDetalle);
-//                    contPresLib=contPresLib+1;            
-//                }
-//                                  
-//            }
-//        }
-//        
-//        if (selectMatVis == 1) {      
-//            String[] prestamos=valores.split("--");
-//            for(int x=0; x<prestamos.length; x++) {
-//                if(prestamos[x].startsWith("MV")){                    
-//                    contPresMatVis=contPresLib+1;                    
-//                }                        
-//            }     
-//          
-//            
-//            if(Integer.parseInt(vistaPres.labResLimMatVis.getText())<=contPresMatVis) {
-//                JOptionPane.showMessageDialog(null, "Ya cumple con el límite de préstamos de material visual"); 
-//            } else {                
-//                if(valores!="") {
-//                    String todoM=listaMatVis.get(0).getClaveMatVis()+"/"+listaEjempMatVis.get(0).getIdEjemplarM()+"/"+listaMatVis.get(0).getTituloM();
-//                    agregar=valores+todoM;
-//                    llenarDetallePres(agregar, tbDetalle); 
-//                    contPresMatVis=contPresMatVis+1;
-//                } else {    
-//                    
-//                    agregar=listaMatVis.get(0).getClaveMatVis()+"/"+listaEjempMatVis.get(0).getIdEjemplarM()+"/"+listaMatVis.get(0).getTituloM();                    
-//                    llenarDetallePres(agregar,tbDetalle);
-//                    contPresMatVis=contPresMatVis+1;            
-//                }
-//                                  
-//            }
-//        }
-//        
-//        return validar;
-//    }
     
     public void llenarDetallePres(String valores, JTable tbDetalle) throws ParseException {    
         DefaultTableModel modeloDetalle = new DefaultTableModel();
@@ -689,6 +629,40 @@ public class controlPrestamo {
             vistaPres.jpPrestamo.setVisible(true);                        
             vistaPres.btRegPrestamo.setVisible(true);
         
+    }
+    
+    public DefaultTableModel limpiarTabla(JTable tabla){        
+        DefaultTableModel modelo = null;
+        try {
+            modelo=(DefaultTableModel) tabla.getModel();
+            int filas=tabla.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+        return modelo;
+    }
+    
+    public void quitarDetPres(){    
+        
+        DefaultTableModel dtm = (DefaultTableModel) vistaPres.tbPresDetalle.getModel();
+        if(vistaPres.tbPresDetalle.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "No ha seleccionado un ejemplar", "ERROR", JOptionPane.ERROR_MESSAGE);                                    
+        } else {
+            String dato=String.valueOf(dtm.getValueAt(vistaPres.tbPresDetalle.getSelectedRow(),1));
+            if(dato.startsWith("LIB")) {
+                contPresLib = contPresLib -1;
+                actLimLibro=Integer.parseInt(vistaPres.labResLimLibro.getText())+1;                
+                vistaPres.labResLimLibro.setText(String.valueOf(actLimLibro));                
+            } else {
+                contPresMatVis = contPresMatVis -1;
+                actLimMatVis=Integer.parseInt(vistaPres.labResLimMatVis.getText())+1;
+                vistaPres.labResLimMatVis.setText(String.valueOf(actLimMatVis));                
+            }         
+            dtm.removeRow(vistaPres.tbPresDetalle.getSelectedRow());             
+        }
     }
     
     public void fechaPrestamo() {

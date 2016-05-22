@@ -325,6 +325,12 @@ public class interfazPrestamo extends JFrame {
         btRegPrestamo.setVisible(false);
         jpPrincPrest.add(btRegPrestamo);
         
+        btPrestQuitar.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                cp.quitarDetPres();
+            }
+        });
+        
         btPresBuscarSolic.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 //primero tengo que buscar que tipo de solicitante es: acuerdate que agregaremos al noControl una A O D al gafete y yo nomas recorto
