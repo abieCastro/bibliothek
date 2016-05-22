@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.border.Border;
 import mantenimientoLibros.controlLibro;
+import mantenimientoMaterialVisual.controlMaterialVisual;
 
 import mantenimientoMaterialVisual.interfazMaterialVisual;
 /**
@@ -38,6 +39,7 @@ public class interfazLibro {
     
     controlLibro CL = new controlLibro();
     interfazMaterialVisual MV = new interfazMaterialVisual();
+    controlMaterialVisual CMV = new controlMaterialVisual();
 
     JPanel jpCatalogo;
     Border bordeCatal,borderRB,bordeRegL,borderExisL,borderNuevL;
@@ -73,6 +75,9 @@ public class interfazLibro {
     
     
     public JPanel InterfazLibro(){
+        
+        
+        
     /*COMPONENTES DE LIBROS Y MATERIAL VISUAL*/
         /* Componentes de Catalogos.*/
         jpCatalogo = new JPanel();
@@ -86,13 +91,13 @@ public class interfazLibro {
         jpCatalogo.setBorder(bordeCatal);
         
         jpRegMV = new JPanel();
-       // jpRegMV=MV.RegistrarMV();
+        jpRegMV=MV.RegistrarMV();
         jpCatalogo.add(jpRegMV);
         jpRegMV.setVisible(false);
         
         
         jpConsMV = new JPanel();
-        //jpConsMV=MV.ConsultaMV();
+        jpConsMV=MV.ConsultaMV();
         jpCatalogo.add(jpConsMV);
         jpConsMV.setVisible(false);
         
@@ -169,7 +174,7 @@ public class interfazLibro {
         jpRegL = new JPanel();
         jpRegL.setLayout(null);
         jpRegL.setBackground(Color.LIGHT_GRAY);
-        jpRegL.setBounds(200,60,950,500);
+        jpRegL.setBounds(200,60,1050,500);
         jpCatalogo.add(jpRegL);
         jpRegL.setVisible(false);
         
@@ -180,7 +185,7 @@ public class interfazLibro {
         jpExisL = new JPanel();
         jpExisL.setLayout(null);
         jpExisL.setBackground(Color.LIGHT_GRAY);
-        jpExisL.setBounds(15,20,610,220);
+        jpExisL.setBounds(15,20,700,220);
         jpRegL.add(jpExisL);
         jpExisL.setVisible(true);
         
@@ -191,7 +196,7 @@ public class interfazLibro {
         jpNuevL = new JPanel();
         jpNuevL.setLayout(null);
         jpNuevL.setBackground(Color.LIGHT_GRAY);
-        jpNuevL.setBounds(15,300,610,180);
+        jpNuevL.setBounds(15,300,700,180);
         jpRegL.add(jpNuevL);
         jpNuevL.setVisible(true);
         
@@ -712,16 +717,16 @@ public class interfazLibro {
         
         jpTabRegLib = new JPanel();
         jpTabRegLib.setLayout(null);
-        jpTabRegLib.setBounds(5,20,600,150);
+        jpTabRegLib.setBounds(5,20,680,150);
         jpTabRegLib.setBackground(Color.LIGHT_GRAY);
         jpTabRegLib.setVisible(true);
         jpExisL.add(jpTabRegLib);
         
         jtTablaRegLib=new JTable();
         jtTablaRegLib=CL.generarTablaLibro();
-        jtTablaRegLib.setBounds(190,100,600,150);
+        jtTablaRegLib.setBounds(190,100,680,150);
         SCPRegLib = new JScrollPane(jtTablaRegLib);
-        SCPRegLib.setBounds(0,0,600,150);
+        SCPRegLib.setBounds(0,0,680,150);
         jpTabRegLib.add(SCPRegLib);
 //        scrollPaneL.setVisible(true);
         
@@ -730,7 +735,7 @@ public class interfazLibro {
         jpClavGL = new JPanel();
         jpClavGL.setLayout(null);
         jpClavGL.setBackground(Color.LIGHT_GRAY);
-        jpClavGL.setBounds(640,20,290,460);
+        jpClavGL.setBounds(740,20,290,460);
         jpRegL.add(jpClavGL);
         jpClavGL.setVisible(true);
         
@@ -807,6 +812,7 @@ public class interfazLibro {
     }
     
     public void btModifiTitL(ActionEvent evt){
+
          NumTupla = jtTablaRegLib.getSelectedRow();
             if(NumTupla<0){
                 JOptionPane.showMessageDialog(jpCatalogo, "Seleccione Información a Modificar.");
@@ -820,8 +826,8 @@ public class interfazLibro {
                    
                    jtTablaRegLib=null;
                    jtTablaRegLib=CL.generarTablaLibro();
-                   
                 }
+                
             }
           System.out.println("modificar....");
     }
@@ -854,6 +860,14 @@ public class interfazLibro {
                        CL.eliminarEjemplar(NumTupla);
                        jtTablaConsul=null;
                        jtTablaConsul=CL.generarTablaEjemplar();
+                       txtFilClaTiL.setText("");
+                       txtFilClaEjL.setText("");
+                       txtFilTitulL.setText("");
+                       txtFilAutorL.setText("");
+                       txtFilClasiL.setText("");
+                       txtFilEditoL.setText("");
+                       txtFilAnoL.setText("");
+                       txtFilEstL.setText("");
                        break;
                 case 1:
                        //JOptionPane.showMessageDialog(this, "NO");
@@ -874,14 +888,24 @@ public class interfazLibro {
         }else{
           if(NumTupla>=0){
                CL.mostrarDatosEjemplar(NumTupla);
+                  jtTablaConsul=null;
+                   jtTablaConsul=CL.generarTablaEjemplar();
+
+                   jtTablaRegLib=null;
+                   jtTablaRegLib=CL.generarTablaLibro();
+
+                   txtFilClaTiL.setText("");
+                   txtFilClaEjL.setText("");
+                   txtFilTitulL.setText("");
+                   txtFilAutorL.setText("");
+                   txtFilClasiL.setText("");
+                   txtFilEditoL.setText("");
+                   txtFilAnoL.setText("");
+                   txtFilEstL.setText("");
                
             }
         }
-        jtTablaConsul=null;
-       jtTablaConsul=CL.generarTablaEjemplar();
-
-       jtTablaRegLib=null;
-       jtTablaRegLib=CL.generarTablaLibro();
+      
     }
     
     public void btAceptar(ActionEvent evt){
@@ -942,11 +966,7 @@ public class interfazLibro {
     }
     
     public void btConsultas(ActionEvent evt){
-        jpRegL.updateUI();  
-        JPConsulEjem.updateUI();
-
-        jpRegMV.updateUI();
-        jpConsMV.updateUI();
+        
             if(rbtLibros.isSelected()==true){        
             jpRegL.setVisible(false);
  
@@ -958,16 +978,33 @@ public class interfazLibro {
             jtTablaRegLib = null;
             jtTablaRegLib = CL.generarTablaLibro();
             
+            jpCatalogo.remove(jpRegMV);
+            jpCatalogo.add(jpRegMV);
+            
+            jpCatalogo.remove(jpConsMV);
+            jpCatalogo.add(jpConsMV);
+            
             jpRegMV.setVisible(false);
             jpConsMV.setVisible(false);
+            
+            
             }
             if(rbtMaterial_Visual.isSelected()==true){
                  jpRegL.setVisible(false);
                  
                  JPConsulEjem.setVisible(false);
                  
+                 jpCatalogo.remove(jpRegMV);
+                jpCatalogo.add(jpRegMV);
+
+                jpCatalogo.remove(jpConsMV);
+                jpCatalogo.add(jpConsMV);
+                 
                  jpRegMV.setVisible(false);
                  jpConsMV.setVisible(true);
+                 
+                   
+                 
             }
     }
     
@@ -975,11 +1012,6 @@ public class interfazLibro {
         btRegistrar.setVisible(true);
         btConsultas.setVisible(true);
         
-        jpRegL.updateUI();  
-        JPConsulEjem.updateUI();
-
-        jpRegMV.updateUI();
-        jpConsMV.updateUI();
 
         if(btRegistrar.isSelected()==true){
             jpRegL.setVisible(false);
@@ -1000,36 +1032,47 @@ public class interfazLibro {
     }
     
     public void btRegistrar(ActionEvent evt){
-        jpRegL.updateUI();  
-        JPConsulEjem.updateUI();
-
-        jpRegMV.updateUI();
-        jpConsMV.updateUI();
+       
         if(rbtLibros.isSelected()==true){         
             jpRegL.setVisible(true);
 
             JPConsulEjem.setVisible(false);
             jtTablaRegLib=null;
             jtTablaRegLib=CL.generarTablaLibro();
-
+       
+            
+            jpCatalogo.remove(jpRegMV);
+            jpCatalogo.add(jpRegMV);
+            
+            jpCatalogo.remove(jpConsMV);
+            jpCatalogo.add(jpConsMV);
+            
             jpRegMV.setVisible(false);
             jpConsMV.setVisible(false);
+            
+            
         }
         if(rbtMaterial_Visual.isSelected()==true){
              jpRegL.setVisible(false);
 
              JPConsulEjem.setVisible(false);
+             
+             
+             jpCatalogo.remove(jpRegMV);
+            jpCatalogo.add(jpRegMV);
+            
+            jpCatalogo.remove(jpConsMV);
+            jpCatalogo.add(jpConsMV);
+             
              jpRegMV.setVisible(true);
              jpConsMV.setVisible(false);
+             
+            
        }
     }
     
     public void rbtLibros(ActionEvent evt){
-        jpRegL.updateUI();  
-        JPConsulEjem.updateUI();
-
-        jpRegMV.updateUI();
-        jpConsMV.updateUI();
+       
         
         btRegistrar.setVisible(true);
         btConsultas.setVisible(true);
@@ -1039,6 +1082,13 @@ public class interfazLibro {
             jpRegL.setVisible(true);
             JPConsulEjem.setVisible(false);
 
+            
+            jpCatalogo.remove(jpRegMV);
+            jpCatalogo.add(jpRegMV);
+            
+            jpCatalogo.remove(jpConsMV);
+            jpCatalogo.add(jpConsMV);
+            
             jpRegMV.setVisible(false);
             jpConsMV.setVisible(false);
         }
@@ -1046,6 +1096,12 @@ public class interfazLibro {
             jpRegL.setVisible(false);
             JPConsulEjem.setVisible(true);
 
+            
+            jpCatalogo.remove(jpRegMV);
+            jpCatalogo.add(jpRegMV);
+            
+            jpCatalogo.remove(jpConsMV);
+            jpCatalogo.add(jpConsMV);
             jpRegMV.setVisible(false);
             jpConsMV.setVisible(false);
         }

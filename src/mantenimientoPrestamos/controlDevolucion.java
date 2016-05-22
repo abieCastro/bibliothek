@@ -130,7 +130,7 @@ public class controlDevolucion {
                     ejempMatVis.setIdEjemplarM(rs.getString(2));
                     matVis.setTituloM(rs.getString(3));
                     matVis.setVolumneM(rs.getString(4));
-                    matVis.setAñoM(rs.getInt(5));
+                    matVis.setAñoM(rs.getString(5));
                     matVis.setClasificacionM(rs.getString(6));
                     matVis.setExistenciaM(rs.getInt(7));
                     matVis.setDisponibilidadM(rs.getInt(8));

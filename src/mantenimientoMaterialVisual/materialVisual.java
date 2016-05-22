@@ -14,7 +14,7 @@ public class materialVisual {
     String claveMatVis;
     String tituloM;
     String volumenM;
-    int añoM;  
+    String añoM;  
     String clasificacionM;
     int existenciaM;
     int disponibilidadM;
@@ -23,7 +23,7 @@ public class materialVisual {
         
     }
     
-    public materialVisual(String claveMatVis,String tituloM, String volumenM, int añoM, String clasificacionM,int existenciaM, int disponibilidadM) {
+    public materialVisual(String claveMatVis,String tituloM, String volumenM, String añoM, String clasificacionM,int existenciaM, int disponibilidadM) {
         this.claveMatVis=claveMatVis;      
         this.tituloM=tituloM;
         this.tituloM=tituloM;
@@ -46,7 +46,7 @@ public class materialVisual {
         return volumenM;
     }
     
-    public int getAñoM() {
+    public String getAñoM() {
         return añoM;
     }
     
@@ -74,7 +74,7 @@ public class materialVisual {
         this.volumenM=volumenM;
     }
     
-    public void setAñoM(int añoM) {
+    public void setAñoM(String añoM) {
         this.añoM=añoM;
     }
     

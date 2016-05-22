@@ -171,7 +171,7 @@ public class interfazSolicitante {
             jpRegA = new JPanel();
             jpRegA.setLayout(null);
             jpRegA.setBackground(Color.LIGHT_GRAY);
-            jpRegA.setBounds(200,60,950,500);
+            jpRegA.setBounds(200,60,1050,500);
             jpCatalogo.add(jpRegA);
             jpRegA.setVisible(false);
 
@@ -516,7 +516,7 @@ public class interfazSolicitante {
             jpRegD = new JPanel();
             jpRegD.setLayout(null);
             jpRegD.setBackground(Color.LIGHT_GRAY);
-            jpRegD.setBounds(200,60,950,500);
+            jpRegD.setBounds(200,60,1050,500);
             jpCatalogo.add(jpRegD);
             jpRegD.setVisible(false);
 

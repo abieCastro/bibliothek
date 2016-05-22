@@ -699,13 +699,6 @@ public class controlSolicitante {
     
     
     
-    
-    
-    
-    
-    
-    
-    
     public void eliminarAlumno(int fila){
         
         if(TbConsultaAlumno.getValueAt(fila, 10).toString().equalsIgnoreCase("0")==false || TbConsultaAlumno.getValueAt(fila, 11).toString().equalsIgnoreCase("0")==false){

@@ -3,16 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mantenimientoLibros;
+package mantenimientoMaterialVisual;
 
-import mantenimientoLibros.controlLibro;
-import mantenimientoLibros.ejemplarLibro;
-import mantenimientoLibros.interfazLibro;
-import mantenimientoLibros.libro;
-import mantenimientoLibros.interfazModificarLibro;
 import principal.conexion;
-
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
@@ -33,21 +26,22 @@ import javax.swing.JTextField;
  *
  * @author ACER
  */
-public class interfazModificarLibro {
-    controlLibro CL = new controlLibro();
-    interfazLibro IL;
+public class interfazModificarMaterialVisual {
+    
     
     conexion c = new conexion();
-    
+    controlMaterialVisual CMV = new controlMaterialVisual();
+    interfazMaterialVisual IMV;
+    JFrame interfaz = new JFrame();
+   
     JTextField txtTitulo;
     JLabel labTitulo;
-    JLabel labAutor;
-    JTextField txtAutor;
-    JLabel labEdicion;
-    JTextField txtEditorial;
+    JLabel labVolumen;
+    JTextField txtVolumen;
+    
     JLabel labAno;
     JTextField txtAno;
-    JLabel labCantidad;
+    JLabel labCantidad,labCantidad2;
     JTextField txtCantidad,txtCantidad2;
     JLabel labClasificacion;
     JComboBox cbClasificacion;
@@ -63,15 +57,27 @@ public class interfazModificarLibro {
     ResultSetMetaData rsmd;
     PreparedStatement Pstatement ;
     
+    
+    /*Estas Variables son para crear los nuevos Ejemplares*/
+    String Clave;
+    String CortarClaveT=null;
+    String CortarNumMax=null;
+    String STransNumMax = null;
+    int ETransNumMax=0;
+    String NuevoEjem=null;
+    
+    /*Estas variables son para generar la diferencia de cantidad VS la existencia*/
+    int dispo= 0;
+    int exist = 0;
+    int diferencia = 0;
+        
+    int Totaldispo= 0;
+    int TotalExis= 0;
     String clasificacion=null;
     
-    JFrame interfaz = new JFrame();
-    
-    boolean bandera =false;
-    
-    public interfazModificarLibro(){
+    public interfazModificarMaterialVisual (){
 
-        interfaz.setTitle("Bibliothek / Libros / Modificar" );
+        interfaz.setTitle("Bibliothek / Material Visual / Modificar" );
         interfaz.setLayout(null);
         interfaz.setResizable(false); 
         interfaz.setDefaultCloseOperation(0);
@@ -81,14 +87,14 @@ public class interfazModificarLibro {
     }  
     
     public void Inicializar(){
-        labClaveL = new JLabel("Clave Libro:");
+        labClaveL = new JLabel("Clave Material Visual:");
         labClaveL .setFont(new java.awt.Font("Tahoma", Font.BOLD,  13));
-        labClaveL .setBounds(0,10,80,20);
+        labClaveL .setBounds(0,10,120,20);
         labClaveL .setVisible(true);
-        interfaz.add(labClaveL);
+        interfaz.add(labClaveL );
         
         txtClaveL= new JTextField();
-        txtClaveL.setBounds(100,10,100,20);
+        txtClaveL.setBounds(150,10,100,20);
         txtClaveL.setEditable(false);
 
         txtClaveL.setVisible(true);
@@ -107,27 +113,18 @@ public class interfazModificarLibro {
         txtTitulo.setVisible(true);
         interfaz.add(txtTitulo);
     
-        labAutor = new JLabel("Autor:");
-        labAutor.setFont(new java.awt.Font("Tahoma", Font.BOLD, 13));
-        labAutor.setBounds(0,75,50,20);
-        labAutor.setVisible(true);
-        interfaz.add(labAutor);
+        labVolumen = new JLabel("Volumen:");
+        labVolumen.setFont(new java.awt.Font("Tahoma", Font.BOLD, 13));
+        labVolumen.setBounds(0,75,90,20);
+        labVolumen.setVisible(true);
+        interfaz.add(labVolumen);
         
-        txtAutor= new JTextField();
-        txtAutor.setBounds(60,75,300,20);
-        txtAutor.setVisible(true);
-        interfaz.add(txtAutor);
+        txtVolumen= new JTextField();
+        txtVolumen.setBounds(60,75,300,20);
+        txtVolumen.setVisible(true);
+        interfaz.add(txtVolumen);
         
-        labEdicion = new JLabel("Editorial:");
-        labEdicion.setFont(new java.awt.Font("Tahoma", Font.BOLD, 13));
-        labEdicion.setBounds(0,100,100,20);
-        labEdicion.setVisible(true);
-        interfaz.add(labEdicion);
         
-        txtEditorial= new JTextField();
-        txtEditorial.setBounds(60,100,300,20);
-        txtEditorial.setVisible(true);
-        interfaz.add(txtEditorial);
         
         labAno = new JLabel("Año:");
         labAno.setFont(new java.awt.Font("Tahoma", Font.BOLD, 13));
@@ -197,21 +194,12 @@ public class interfazModificarLibro {
         cbClasificacion.setVisible(true);
         interfaz.add(cbClasificacion);
         cbClasificacion.addItem("");
-        cbClasificacion.addItem("Biología");
-        cbClasificacion.addItem("Física");
-        cbClasificacion.addItem("Química");
+        cbClasificacion.addItem("Ciencia");
+        cbClasificacion.addItem("Historia");
+        cbClasificacion.addItem("Recreativo");
         cbClasificacion.addItem("Geografía");
         cbClasificacion.addItem("Español");
         cbClasificacion.addItem("Matemáticas");
-        cbClasificacion.addItem("Cuento");
-        cbClasificacion.addItem("Novela");
-        cbClasificacion.addItem("Historia");
-        cbClasificacion.addItem("Biografía");
-        cbClasificacion.addItem("Diccionario");
-        cbClasificacion.addItem("Inglés");
-        cbClasificacion.addItem("Poema");
-        cbClasificacion.addItem("Material de Apoyo");
-        cbClasificacion.addItem("Arte");
         
         
         btModificar = new JButton("Guardar Cambios");
@@ -225,7 +213,8 @@ public class interfazModificarLibro {
             }
         });
         
-          btCancelar = new JButton("Cancelar");
+        
+        btCancelar = new JButton("Cancelar");
         btCancelar.setBounds(260,220,100,20);
         btCancelar.setVisible(true);
         interfaz.add(btCancelar);
@@ -237,9 +226,10 @@ public class interfazModificarLibro {
             }
         });
         
+        
+        
     }
     
-      
     public void btCancelarActionPerformed(ActionEvent evt){
          switch(JOptionPane.showOptionDialog(interfaz, "¿Está seguro que desea Cancelar la Modificación?", "Eliminar Libro", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{" SI "," NO"},"0"))
                {
@@ -257,20 +247,25 @@ public class interfazModificarLibro {
     }
     
     
-    
     private void btModificarActionPerformed(ActionEvent evt) {
-
         String clasificacion= cbClasificacion.getSelectedItem().toString();
-        boolean respuesta = CL.validarDatos(txtTitulo.getText().toUpperCase(), txtAutor.getText().toUpperCase(),txtAno.getText(),txtEditorial.getText().toUpperCase(), txtCantidad.getText(), clasificacion);
+        boolean respuesta = CMV.validarDatos(txtTitulo.getText().toUpperCase(), txtVolumen.getText().toUpperCase(),txtAno.getText(), txtCantidad.getText(), clasificacion);
 
           if(respuesta==false){
             int cantidad1=Integer.parseInt(txtCantidad2.getText());
             int cantidad2=Integer.parseInt(txtCantidad.getText());
-            CL.modificarLibro(cantidad1, cantidad2,txtClaveL.getText(),txtTitulo.getText().toUpperCase(),txtAutor.getText().toUpperCase(),txtAno.getText(),txtEditorial.getText().toUpperCase(),clasificacion);
-           
-            bandera =true;
+            CMV.modificarMV(cantidad1, cantidad2,txtClaveL.getText(),txtTitulo.getText().toUpperCase(),txtVolumen.getText().toUpperCase(),txtAno.getText(),clasificacion);
+            
+            IMV = new interfazMaterialVisual();
+            IMV.jtTablaMV=null;
+            IMV.jtTablaMV=CMV.generarTablaEjemplarMV();
+            
+            IMV.jtTablaRegMV=null;
+            IMV.jtTablaRegMV=CMV.generarTablaMV();
             interfaz.dispose(); 
           }
+        
+        
     }
     
 }

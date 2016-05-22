@@ -63,6 +63,7 @@ public class controlLibro {
     ResultSetMetaData resultsetMD;
     PreparedStatement Pstatement;
     
+    
     /*Constructor*/
     public controlLibro(){
         
@@ -148,8 +149,7 @@ public class controlLibro {
         }
         
         if(respuesta){
-        System.out.println("RESPUESTA:"+Faltantes);
-        JOptionPane.showMessageDialog(IL.jpCatalogo,Faltantes);
+            JOptionPane.showMessageDialog(IL.jpCatalogo,Faltantes);
         }
         return respuesta;
     }
@@ -454,8 +454,7 @@ public class controlLibro {
               
             }
            
-            resultset.close();
-            Conexion.close();
+            
             
          }catch(SQLException e){
          
@@ -470,6 +469,7 @@ public class controlLibro {
         
         int Existencia=0;
         int Disponibilidad=0;
+        String s="";
         
         try{
             Conexion = c.getConexion();
@@ -484,32 +484,40 @@ public class controlLibro {
             }
         }catch(SQLException e){
         }
-        String t= TbConsultaLib.getValueAt(fila, 0).toString();
+       
+
         
-
-        int CantidadE = Existencia-1;
-        int CantidadD = Disponibilidad-1;
-        try{
-            SQL="UPDATE libro SET existenciaL='"+CantidadE+"',disponibilidadL='"+CantidadD+"' WHERE claveLibro='"+TbConsultaLib.getValueAt(fila, 0)+"'";
-
-            Pstatement = Conexion.prepareStatement(SQL);
-            Pstatement.executeUpdate();
-        }catch(SQLException e){
-        }
-      
-        try {
-            Conexion= c.getConexion();
-            statement= Conexion.createStatement();
-
-            SQL = "DELETE FROM ejemplarlibro WHERE idEjemplarL='"+TbConsultaLib.getValueAt(fila, 1)+"'";
-            String r= TbConsultaLib.getValueAt(fila, 1).toString();
+        if(TbConsultaLib.getValueAt(fila, 7).equals("DISPONIBLE")==true){
             
-            int validar = statement.executeUpdate(SQL);
-            if(validar>0){
+            int CantidadE = Existencia-1;
+                int CantidadD = Disponibilidad-1;
+                try{
+                    SQL="UPDATE libro SET existenciaL='"+CantidadE+"',disponibilidadL='"+CantidadD+"' WHERE claveLibro='"+TbConsultaLib.getValueAt(fila, 0)+"'";
+
+                    Pstatement = Conexion.prepareStatement(SQL);
+                    Pstatement.executeUpdate();
+                }catch(SQLException e){
+                }
+
+                try {
+                    Conexion= c.getConexion();
+                    statement= Conexion.createStatement();
+
+                    SQL = "DELETE FROM ejemplarlibro WHERE idEjemplarL='"+TbConsultaLib.getValueAt(fila, 1)+"'";
+                    String r= TbConsultaLib.getValueAt(fila, 1).toString();
+
+                    int validar = statement.executeUpdate(SQL);
+                    if(validar>0){
+
+                        JOptionPane.showMessageDialog(null, "Se ha eliminado el ejemplar.");}
+                } catch (SQLException ex) {
+                    java.util.logging.Logger.getLogger(controlLibro.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+        }else{
+            
+            JOptionPane.showMessageDialog(null, "El ejemplar no puede ser eliminado,este sigue prestado.");      
                 
-                JOptionPane.showMessageDialog(null, "Se ha eliminado el ejemplar.");}
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(controlLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -549,6 +557,8 @@ public class controlLibro {
             modificar.txtCantidad.setText(ClaveT);
             modificar.txtCantidad2.setText(ClaveT);
             
+             DTMRegLib.setRowCount(0);
+             DTMLib.setRowCount(0);
 
     }
 //    
@@ -629,8 +639,7 @@ public class controlLibro {
            
             }
            
-            resultset.close();
-            Conexion.close();
+           
             
          }catch(SQLException e){
          
@@ -906,7 +915,7 @@ public class controlLibro {
     
     /*Modificar Informacion*/
     public void modificarLibro(int ExistCant, int NuevCant,String txtClaveL,String titulo,String autor,String ano,String editorial,String clasificacion){
-        
+       
         Conexion= c.getConexion();
         /*Estas Variables son para crear los nuevos Ejemplares*/
         String Clave=null;
@@ -966,7 +975,10 @@ public class controlLibro {
          TotalExis= exist+diferencia;
         
         /*Aqui Corto y transformo , para poder crear el nuevo ejemplar*/
-        
+        if(Clave==null){
+            String generar = txtClaveL.substring(3,11);
+            Clave=generar+"-00";
+        }
         CortarClaveT=Clave.substring(0,9);
         CortarNumMax=Clave.substring(9,11);
 
@@ -1019,7 +1031,8 @@ public class controlLibro {
 
                 int validar = Pstatement.executeUpdate(SQL);
                 if(validar>0){
-                    JOptionPane.showMessageDialog(null, "Registro Modificado");
+                    JOptionPane.showMessageDialog(null, "Se ha modificado el registro.");
+                    
                 }
                  
         } catch (SQLException ex) {
@@ -1042,7 +1055,9 @@ public class controlLibro {
                 int validar = Pstatement.executeUpdate(SQL);
                 if(validar>0){
 
-                    JOptionPane.showMessageDialog(null, "Se ha modificado el registro.");}
+                    JOptionPane.showMessageDialog(null, "Se ha modificado el registro.");
+                   
+                }
                  
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(libro.class.getName()).log(Level.SEVERE, null, ex);
@@ -1056,7 +1071,6 @@ public class controlLibro {
         DTMRegLib.setRowCount(0);
         DTMLib.setRowCount(0);
     }
-
 
 
 }
